@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 import { addTransaction, getSummary, getTransactions, updateCategory } from "./api";
 import AnalyticsBar from "./components/AnalyticsBar";
+import BalanceStrip from "./components/BalanceStrip";
 import TransactionFeed from "./components/TransactionFeed";
 import "./App.css";
+
+const QUICK_ADD_PRESETS = [
+  { label: "+ Zomato ₹250", rawText: "Paid Rs. 250 to Zomato" },
+  { label: "+ Uber ₹480", rawText: "Paid Rs. 480 to Uber" },
+  { label: "+ Salary ₹45,000", rawText: "Credited Rs. 45000 Salary for June" },
+  { label: "+ Cashback Offer", rawText: "Paid Rs. 999 to Amazon Pay Cashback offer" },
+];
 
 function App() {
   const [transactions, setTransactions] = useState([]);
@@ -30,6 +38,11 @@ function App() {
     refresh();
   }
 
+  async function handleQuickAdd(presetRawText) {
+    await addTransaction(presetRawText);
+    refresh();
+  }
+
   async function handleCategoryChange(id, category) {
     await updateCategory(id, category);
     refresh();
@@ -43,6 +56,14 @@ function App() {
 
       {summary && <AnalyticsBar categories={summary.categories} />}
 
+      {summary && (
+        <BalanceStrip
+          totalCredit={summary.total_credit}
+          totalDebit={summary.total_debit}
+          net={summary.net}
+        />
+      )}
+
       <form className="add-transaction-form" onSubmit={handleAddTransaction}>
         <input
           type="text"
@@ -52,6 +73,19 @@ function App() {
         />
         <button type="submit">Add</button>
       </form>
+
+      <div className="quick-add-row">
+        {QUICK_ADD_PRESETS.map((preset) => (
+          <button
+            key={preset.label}
+            type="button"
+            className="quick-add-button"
+            onClick={() => handleQuickAdd(preset.rawText)}
+          >
+            {preset.label}
+          </button>
+        ))}
+      </div>
 
       <TransactionFeed
         transactions={transactions}

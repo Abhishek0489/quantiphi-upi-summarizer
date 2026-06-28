@@ -45,6 +45,45 @@
   transition: width 0.5s ease;
 }
 
+/* Balance strip */
+.balance-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.balance-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+}
+
+.balance-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.balance-value {
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.balance-value.credit {
+  color: var(--credit);
+}
+
+.balance-value.debit {
+  color: var(--debit);
+}
+
 /* Add transaction form */
 .add-transaction-form {
   display: flex;
@@ -80,6 +119,29 @@
 
 .add-transaction-form button:hover {
   opacity: 0.9;
+}
+
+/* Quick-add presets */
+.quick-add-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.quick-add-button {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.quick-add-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 /* Transaction feed */
