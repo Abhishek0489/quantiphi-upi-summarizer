@@ -3,12 +3,19 @@ const CATEGORY_OPTIONS = ["Food & Dining", "Travel", "Salary", "Miscellaneous"];
 function TransactionCard({ transaction, onCategoryChange, onDelete }) {
   const isDebit = transaction.direction === "debit";
   const amountLabel = `${isDebit ? "-" : "+"}₹${transaction.amount.toLocaleString("en-IN")}`;
+  const timeLabel = new Date(transaction.created_at).toLocaleTimeString("en-IN", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
 
   return (
     <div className="transaction-card">
       <div className="transaction-row">
         <div className="transaction-info">
-          <p className="transaction-description">{transaction.description}</p>
+          <div className="transaction-heading">
+            <p className="transaction-description">{transaction.description}</p>
+            <span className="transaction-time">{timeLabel}</span>
+          </div>
           <select
             className="category-select"
             value={transaction.category}

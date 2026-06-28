@@ -8,8 +8,11 @@ import {
 } from "./api";
 import AnalyticsBar from "./components/AnalyticsBar";
 import BalanceStrip from "./components/BalanceStrip";
+import Toast from "./components/Toast";
 import TransactionFeed from "./components/TransactionFeed";
 import "./App.css";
+
+const TOAST_DURATION_MS = 2500;
 
 const QUICK_ADD_PRESETS = [
   { label: "+ Zomato ₹250", rawText: "Paid Rs. 250 to Zomato" },
@@ -29,6 +32,15 @@ function App() {
   const [summary, setSummary] = useState(null);
   const [rawText, setRawText] = useState("");
   const [directionFilter, setDirectionFilter] = useState("all");
+  const [toasts, setToasts] = useState([]);
+
+  function showToast(message, type) {
+    const id = Date.now();
+    setToasts((prev) => [...prev, { id, message, type }]);
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((toast) => toast.id !== id));
+    }, TOAST_DURATION_MS);
+  }
 
   async function refresh() {
     const [transactionsData, summaryData] = await Promise.all([
@@ -48,11 +60,13 @@ function App() {
     if (!rawText.trim()) return;
     await addTransaction(rawText.trim());
     setRawText("");
+    showToast("Transaction added", "success");
     refresh();
   }
 
   async function handleQuickAdd(presetRawText) {
     await addTransaction(presetRawText);
+    showToast("Transaction added", "success");
     refresh();
   }
 
@@ -63,6 +77,7 @@ function App() {
 
   async function handleDelete(id) {
     await deleteTransaction(id);
+    showToast("Transaction deleted", "error");
     refresh();
   }
 
@@ -128,6 +143,8 @@ function App() {
         onCategoryChange={handleCategoryChange}
         onDelete={handleDelete}
       />
+
+      <Toast toasts={toasts} />
     </div>
   );
 }

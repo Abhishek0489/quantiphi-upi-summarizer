@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 
 CATEGORY_KEYWORDS = {
     "Food & Dining": ["zomato", "swiggy", "dominos", "kfc", "mcdonald", "restaurant", "cafe"],
@@ -71,4 +72,5 @@ def build_transaction(transaction_id: int, raw_text: str) -> dict:
         "category": category,
         "auto_tagged": auto_tagged,
         "expected_savings": expected_savings,
+        "created_at": datetime.now().isoformat(),
     }

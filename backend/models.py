@@ -13,6 +13,7 @@ class Transaction(BaseModel):
     category: str
     auto_tagged: bool
     expected_savings: Optional[float] = None
+    created_at: str
 
 
 class TransactionCreate(BaseModel):
