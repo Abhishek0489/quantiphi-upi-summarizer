@@ -1,6 +1,6 @@
 const CATEGORY_OPTIONS = ["Food & Dining", "Travel", "Salary", "Miscellaneous"];
 
-function TransactionCard({ transaction, onCategoryChange }) {
+function TransactionCard({ transaction, onCategoryChange, onDelete }) {
   const isDebit = transaction.direction === "debit";
   const amountLabel = `${isDebit ? "-" : "+"}₹${transaction.amount.toLocaleString("en-IN")}`;
 
@@ -24,6 +24,14 @@ function TransactionCard({ transaction, onCategoryChange }) {
         <span className={`transaction-amount ${isDebit ? "debit" : "credit"}`}>
           {amountLabel}
         </span>
+        <button
+          type="button"
+          className="delete-button"
+          aria-label="Delete transaction"
+          onClick={() => onDelete(transaction.id)}
+        >
+          ✕
+        </button>
       </div>
 
       {transaction.expected_savings != null && (

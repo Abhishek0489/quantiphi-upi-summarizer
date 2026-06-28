@@ -38,6 +38,13 @@ class TransactionStore:
                 return transaction
         return None
 
+    def delete_transaction(self, transaction_id: int) -> bool:
+        for transaction in self._transactions:
+            if transaction["id"] == transaction_id:
+                self._transactions.remove(transaction)
+                return True
+        return False
+
     def get_summary(self) -> dict:
         categories = {cat: 0.0 for cat in CATEGORIES}
         total_credit = 0.0

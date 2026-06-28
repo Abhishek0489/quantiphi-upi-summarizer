@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { addTransaction, getSummary, getTransactions, updateCategory } from "./api";
+import {
+  addTransaction,
+  deleteTransaction,
+  getSummary,
+  getTransactions,
+  updateCategory,
+} from "./api";
 import AnalyticsBar from "./components/AnalyticsBar";
 import BalanceStrip from "./components/BalanceStrip";
 import TransactionFeed from "./components/TransactionFeed";
@@ -12,10 +18,17 @@ const QUICK_ADD_PRESETS = [
   { label: "+ Cashback Offer", rawText: "Paid Rs. 999 to Amazon Pay Cashback offer" },
 ];
 
+const DIRECTION_FILTERS = [
+  { label: "All", value: "all" },
+  { label: "Money In", value: "credit" },
+  { label: "Money Out", value: "debit" },
+];
+
 function App() {
   const [transactions, setTransactions] = useState([]);
   const [summary, setSummary] = useState(null);
   const [rawText, setRawText] = useState("");
+  const [directionFilter, setDirectionFilter] = useState("all");
 
   async function refresh() {
     const [transactionsData, summaryData] = await Promise.all([
@@ -47,6 +60,16 @@ function App() {
     await updateCategory(id, category);
     refresh();
   }
+
+  async function handleDelete(id) {
+    await deleteTransaction(id);
+    refresh();
+  }
+
+  const filteredTransactions =
+    directionFilter === "all"
+      ? transactions
+      : transactions.filter((t) => t.direction === directionFilter);
 
   return (
     <div className="app">
@@ -87,9 +110,23 @@ function App() {
         ))}
       </div>
 
+      <div className="filter-tabs">
+        {DIRECTION_FILTERS.map((filterOption) => (
+          <button
+            key={filterOption.value}
+            type="button"
+            className={`filter-tab ${directionFilter === filterOption.value ? "active" : ""}`}
+            onClick={() => setDirectionFilter(filterOption.value)}
+          >
+            {filterOption.label}
+          </button>
+        ))}
+      </div>
+
       <TransactionFeed
-        transactions={transactions}
+        transactions={filteredTransactions}
         onCategoryChange={handleCategoryChange}
+        onDelete={handleDelete}
       />
     </div>
   );

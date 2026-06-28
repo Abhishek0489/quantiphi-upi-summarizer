@@ -144,6 +144,29 @@
   color: var(--accent);
 }
 
+/* Filter tabs */
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.filter-tab {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.filter-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
 /* Transaction feed */
 .transaction-feed {
   display: flex;
@@ -210,6 +233,20 @@
 
 .transaction-amount.credit {
   color: var(--credit);
+}
+
+.delete-button {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.delete-button:hover {
+  color: var(--debit);
 }
 
 .savings-row {

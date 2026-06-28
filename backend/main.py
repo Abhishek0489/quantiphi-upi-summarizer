@@ -35,3 +35,11 @@ def update_transaction_category(transaction_id: int, payload: CategoryUpdate):
 @app.get("/summary", response_model=Summary)
 def get_summary():
     return store.get_summary()
+
+
+@app.delete("/transactions/{transaction_id}", response_model=Summary)
+def delete_transaction(transaction_id: int):
+    deleted = store.delete_transaction(transaction_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Transaction not found")
+    return store.get_summary()

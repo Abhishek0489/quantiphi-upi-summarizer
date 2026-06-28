@@ -27,3 +27,10 @@ export async function updateCategory(id, category) {
   });
   return res.json();
 }
+
+export async function deleteTransaction(id) {
+  const res = await fetch(`${BASE_URL}/transactions/${id}`, {
+    method: "DELETE",
+  });
+  return res.json();
+}
