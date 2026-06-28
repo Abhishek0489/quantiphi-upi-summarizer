@@ -45,6 +45,12 @@ uvicorn main:app --reload --port 8000
 ```
 Runs at `http://localhost:8000`. In-memory store — seeds 6 sample transactions on every restart.
 
+> **Windows PowerShell "running scripts is disabled" error?** This is PowerShell's script execution policy blocking `activate.ps1`, not a project issue. Fix it for just that terminal session (no permanent system change):
+> ```powershell
+> Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+> venv\Scripts\activate
+> ```
+
 ### Frontend (Vite + React)
 ```bash
 cd frontend
