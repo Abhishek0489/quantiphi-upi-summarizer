@@ -106,3 +106,22 @@ Runs at `http://localhost:5173` and talks to the backend at `localhost:8000`.
    ```powershell
    curl http://localhost:8000/summary
    ```
+
+## Sample inputs to test each feature
+
+Paste any of these into the add-transaction box to exercise a specific code path:
+
+| Input | Direction | Category | Expected Savings | Why |
+|---|---|---|---|---|
+| `Paid Rs. 250 to Zomato` | debit | Food & Dining | — | keyword match: "zomato" |
+| `Paid Rs. 480 to Uber` | debit | Travel | — | keyword match: "uber" |
+| `Credited Rs. 45000 Salary for June` | credit | Salary | — | keyword match: "salary" |
+| `Paid Rs. 999 to Amazon Pay Cashback offer` | debit | Miscellaneous | +19.98 pts | reward keyword: "amazon pay" / "cashback" |
+| `Paid Rs. 300 to CRED Cashback` | debit | Miscellaneous | +6.0 pts | reward keyword: "cred" / "cashback" |
+| `Received Rs. 1,200 from Private Company Ltd` | credit | Miscellaneous | — | no keyword match → fallback |
+| `Paid Rs. 500 to Random Store` | debit | Miscellaneous | — | no keyword match → fallback |
+| `Sent Rs. 150 to Cafe Coffee Day` | debit | Food & Dining | — | "sent" → debit, "cafe" → category |
+| `Debited Rs. 320 for Indigo Flight` | debit | Travel | — | "debited" → debit, "indigo" → category |
+| `paid 150 to zomato` (no "Rs.") | debit | Food & Dining | — | direction/category still detected, but amount is `0` — the parser's amount regex requires the literal "Rs." prefix per spec, so this is the expected strict-format behavior, not a bug |
+
+After adding any of these, also try: changing its category dropdown (watch the bars move), deleting it (✕ button + red toast), and filtering/searching for it via the tabs and search box above the feed.
