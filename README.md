@@ -33,10 +33,14 @@ frontend/src/
 
 ## Running it
 
+`venv/` and `node_modules/` are gitignored — on a fresh clone you need to create the venv and install dependencies before running.
+
 ### Backend (FastAPI)
 ```bash
 cd backend
+python -m venv venv
 venv\Scripts\activate      # Windows; use `source venv/bin/activate` on macOS/Linux
+pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 ```
 Runs at `http://localhost:8000`. In-memory store — seeds 6 sample transactions on every restart.
@@ -60,7 +64,7 @@ Runs at `http://localhost:5173` and talks to the backend at `localhost:8000`.
 
 ## Manual demo walkthrough
 
-1. **Start the backend.**
+1. **Start the backend** (first time only: create the venv and install deps, see above).
    ```powershell
    cd backend
    .\venv\Scripts\activate
