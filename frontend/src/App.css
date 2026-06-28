@@ -1,26 +1,45 @@
 .app {
   max-width: 640px;
   margin: 0 auto;
-  padding: 32px 20px 64px;
+  padding: 40px 20px 64px;
+}
+
+.app-header {
+  margin-bottom: 28px;
 }
 
 .app-header h1 {
-  font-size: 26px;
-  font-weight: 600;
-  margin: 0 0 24px;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 0;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.app-header::after {
+  content: "Your spending, summarized.";
+  display: block;
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--text-muted);
 }
 
 /* Analytics bars */
 .analytics-bar {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  background: var(--surface);
+  gap: 18px;
+  background: var(--surface-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
+  border-radius: 20px;
+  padding: 22px;
   margin-bottom: 24px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-lg);
 }
 
 .progress-label {
@@ -28,21 +47,58 @@
   justify-content: space-between;
   font-size: 13px;
   color: var(--text-muted);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.progress-category-name {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.progress-block[data-category="Food & Dining"] .progress-category-name::before {
+  content: "🍔 ";
+}
+
+.progress-block[data-category="Travel"] .progress-category-name::before {
+  content: "✈️ ";
+}
+
+.progress-block[data-category="Salary"] .progress-category-name::before {
+  content: "💰 ";
+}
+
+.progress-block[data-category="Miscellaneous"] .progress-category-name::before {
+  content: "📦 ";
 }
 
 .progress-track {
-  height: 8px;
+  height: 12px;
   border-radius: 999px;
-  background: var(--border);
+  background: rgba(255, 255, 255, 0.06);
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent), #b9a2ff);
-  transition: width 0.5s ease;
+  background: var(--accent-gradient);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-block[data-category="Food & Dining"] .progress-fill {
+  background: var(--cat-food);
+}
+
+.progress-block[data-category="Travel"] .progress-fill {
+  background: var(--cat-travel);
+}
+
+.progress-block[data-category="Salary"] .progress-fill {
+  background: var(--cat-salary);
+}
+
+.progress-block[data-category="Miscellaneous"] .progress-fill {
+  background: var(--cat-misc);
 }
 
 /* Balance strip */
@@ -60,8 +116,8 @@
   gap: 4px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 16px;
+  border-radius: 14px;
+  padding: 14px 16px;
   box-shadow: var(--shadow);
 }
 
@@ -72,7 +128,7 @@
 
 .balance-value {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
@@ -93,8 +149,8 @@
 
 .add-transaction-form input {
   flex: 1;
-  padding: 12px 14px;
-  border-radius: 12px;
+  padding: 13px 20px;
+  border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
@@ -104,21 +160,23 @@
 .add-transaction-form input:focus {
   outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.25);
 }
 
 .add-transaction-form button {
-  padding: 12px 20px;
-  border-radius: 12px;
+  padding: 13px 24px;
+  border-radius: 999px;
   border: none;
-  background: var(--accent);
+  background: var(--accent-gradient);
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   cursor: pointer;
 }
 
 .add-transaction-form button:hover {
-  opacity: 0.9;
+  transform: scale(1.05);
+  box-shadow: var(--shadow);
 }
 
 /* Quick-add presets */
@@ -142,6 +200,7 @@
 .quick-add-button:hover {
   border-color: var(--accent);
   color: var(--accent);
+  transform: translateY(-1px);
 }
 
 /* Filter tabs */
@@ -154,8 +213,8 @@
 
 .search-input {
   width: 100%;
-  padding: 10px 14px;
-  border-radius: 12px;
+  padding: 11px 18px;
+  border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
@@ -166,6 +225,7 @@
 .search-input:focus {
   outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.25);
 }
 
 .filter-tab {
@@ -179,8 +239,8 @@
 }
 
 .filter-tab.active {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--accent-gradient);
+  border-color: transparent;
   color: #fff;
 }
 
@@ -194,14 +254,33 @@
 .transaction-card {
   background: var(--surface);
   border: 1px solid var(--border);
+  border-left: 4px solid var(--border-strong);
   border-radius: 14px;
   padding: 16px 18px;
   box-shadow: var(--shadow);
-  transition: border-color 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.transaction-card[data-category="Food & Dining"] {
+  border-left-color: #ff5a45;
+}
+
+.transaction-card[data-category="Travel"] {
+  border-left-color: #3b82f6;
+}
+
+.transaction-card[data-category="Salary"] {
+  border-left-color: #22c55e;
+}
+
+.transaction-card[data-category="Miscellaneous"] {
+  border-left-color: #a855f7;
 }
 
 .transaction-card:hover {
-  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-strong);
 }
 
 .transaction-row {
@@ -241,18 +320,29 @@
 
 .category-select {
   align-self: flex-start;
+  appearance: none;
+  -webkit-appearance: none;
   font-size: 12px;
+  font-weight: 500;
   color: var(--text-muted);
-  background: var(--bg);
+  background-color: rgba(255, 255, 255, 0.06);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b90a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 12px;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 4px 8px;
+  border-radius: 999px;
+  padding: 5px 26px 5px 12px;
   cursor: pointer;
+}
+
+.category-select:hover {
+  border-color: var(--border-strong);
 }
 
 .transaction-amount {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 800;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -277,13 +367,24 @@
 
 .delete-button:hover {
   color: var(--debit);
+  transform: scale(1.15);
 }
 
 .savings-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   margin-top: 10px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(34, 216, 138, 0.14);
   color: var(--credit);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.savings-row::before {
+  content: "💸";
 }
 
 /* Toasts */
@@ -303,7 +404,7 @@
   font-size: 13px;
   font-weight: 600;
   color: #fff;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-lg);
   animation: toast-in 0.2s ease;
 }
 

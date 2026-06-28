@@ -1,17 +1,31 @@
 :root {
-  --bg: #0f1115;
-  --surface: #1a1d24;
-  --border: #2a2d36;
-  --text: #e4e6eb;
-  --text-muted: #8b8f99;
-  --accent: #7c5cff;
-  --debit: #ff5c7a;
-  --credit: #3ddc97;
-  --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --bg: #0a0d14;
+  --bg-elevated: #0e1219;
+  --surface: #151a24;
+  --surface-glass: rgba(21, 26, 36, 0.6);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --text: #eef0f5;
+  --text-muted: #8b90a0;
 
-  font: 16px/145% system-ui, "Segoe UI", Roboto, sans-serif;
+  --accent: #7c5cff;
+  --accent-2: #4f8cff;
+  --accent-gradient: linear-gradient(135deg, var(--accent), var(--accent-2));
+
+  --debit: #ff4d6d;
+  --credit: #22d88a;
+
+  --cat-food: linear-gradient(90deg, #ff8a45, #ff3d57);
+  --cat-travel: linear-gradient(90deg, #22d3ee, #3b82f6);
+  --cat-salary: linear-gradient(90deg, #4ade80, #16a34a);
+  --cat-misc: linear-gradient(90deg, #c084fc, #7c3aed);
+
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+
+  font: 16px/145% Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color: var(--text);
-  background: var(--bg);
+  background: radial-gradient(circle at 20% 0%, #131829 0%, var(--bg) 55%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -24,4 +38,13 @@
 
 body {
   margin: 0;
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+.transaction-card,
+a {
+  transition: all 0.2s ease;
 }

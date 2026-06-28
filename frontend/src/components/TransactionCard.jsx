@@ -9,7 +9,7 @@ function TransactionCard({ transaction, onCategoryChange, onDelete }) {
   });
 
   return (
-    <div className="transaction-card">
+    <div className="transaction-card" data-category={transaction.category}>
       <div className="transaction-row">
         <div className="transaction-info">
           <div className="transaction-heading">

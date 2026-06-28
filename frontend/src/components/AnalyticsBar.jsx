@@ -10,9 +10,9 @@ function AnalyticsBar({ categories }) {
         const widthPercent = (value / maxValue) * 100;
 
         return (
-          <div className="progress-block" key={category}>
+          <div className="progress-block" data-category={category} key={category}>
             <div className="progress-label">
-              <span>{category}</span>
+              <span className="progress-category-name">{category}</span>
               <span>₹{value.toLocaleString("en-IN")}</span>
             </div>
             <div className="progress-track">
