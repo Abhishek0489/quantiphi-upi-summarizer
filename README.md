@@ -57,3 +57,48 @@ Runs at `http://localhost:5173` and talks to the backend at `localhost:8000`.
 | `POST` | `/transactions` | body `{raw_text}` → parse, categorize, store |
 | `PATCH` | `/transactions/{id}/category` | body `{category}` → manual override |
 | `GET` | `/summary` | per-category spend totals, total credit/debit, net |
+
+## Manual demo walkthrough
+
+1. **Start the backend.**
+   ```powershell
+   cd backend
+   .\venv\Scripts\activate
+   uvicorn main:app --reload --port 8000
+   ```
+   Leave this terminal running. Visit `http://localhost:8000/transactions` and `http://localhost:8000/summary` in a browser to confirm the 6 seed transactions and aggregates are there.
+
+2. **Start the frontend** (in a second terminal).
+   ```powershell
+   cd frontend
+   npm install
+   npm run dev
+   ```
+   Leave this running too, then open `http://localhost:5173`.
+
+3. **Look at the seeded state.** Four analytics bars at the top (Food & Dining, Travel, Salary, Miscellaneous), six transaction cards below — newest first. Debit amounts are red, credit amounts are green. The "Amazon Pay Cashback offer" card has a green "Expected Savings" sub-row.
+
+4. **Add a transaction that matches a keyword.** In the input box, type:
+   ```
+   Paid Rs. 75 to Domino's
+   ```
+   Click **Add**. A new card appears at the top, auto-tagged `Food & Dining`, and that bar grows.
+
+5. **Add a transaction with no keyword match.** Type:
+   ```
+   Paid Rs. 500 to Random Store
+   ```
+   It falls back to `Miscellaneous`.
+
+6. **Add a cashback transaction.** Type:
+   ```
+   Paid Rs. 300 to CRED Cashback
+   ```
+   The new card shows a green "Expected Savings: +6.0 pts" row (2% of 300).
+
+7. **Override a category manually.** Pick any card's dropdown and change its category. The analytics bars update immediately — this is a `PATCH` to the backend followed by a re-fetch of `/summary`, proving the aggregation is recomputed server-side, not in the browser.
+
+8. **(Optional) Hit the API directly** to show the logic is backend-owned:
+   ```powershell
+   curl http://localhost:8000/summary
+   ```
