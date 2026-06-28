@@ -27,11 +27,15 @@ const DIRECTION_FILTERS = [
   { label: "Money Out", value: "debit" },
 ];
 
+const CATEGORY_FILTERS = ["All", "Food & Dining", "Travel", "Salary", "Miscellaneous"];
+
 function App() {
   const [transactions, setTransactions] = useState([]);
   const [summary, setSummary] = useState(null);
   const [rawText, setRawText] = useState("");
   const [directionFilter, setDirectionFilter] = useState("all");
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const [toasts, setToasts] = useState([]);
 
   function showToast(message, type) {
@@ -81,10 +85,10 @@ function App() {
     refresh();
   }
 
-  const filteredTransactions =
-    directionFilter === "all"
-      ? transactions
-      : transactions.filter((t) => t.direction === directionFilter);
+  const filteredTransactions = transactions
+    .filter((t) => directionFilter === "all" || t.direction === directionFilter)
+    .filter((t) => categoryFilter === "All" || t.category === categoryFilter)
+    .filter((t) => t.description.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
     <div className="app">
@@ -137,6 +141,27 @@ function App() {
           </button>
         ))}
       </div>
+
+      <div className="filter-tabs">
+        {CATEGORY_FILTERS.map((category) => (
+          <button
+            key={category}
+            type="button"
+            className={`filter-tab ${categoryFilter === category ? "active" : ""}`}
+            onClick={() => setCategoryFilter(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <input
+        type="text"
+        className="search-input"
+        placeholder="Search by description..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
 
       <TransactionFeed
         transactions={filteredTransactions}
