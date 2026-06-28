@@ -1,0 +1,151 @@
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+.app-header h1 {
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0 0 24px;
+}
+
+/* Analytics bars */
+.analytics-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.progress-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), #b9a2ff);
+  transition: width 0.5s ease;
+}
+
+/* Add transaction form */
+.add-transaction-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.add-transaction-form input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.add-transaction-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.add-transaction-form button {
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.add-transaction-form button:hover {
+  opacity: 0.9;
+}
+
+/* Transaction feed */
+.transaction-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.transaction-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+
+.transaction-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.transaction-description {
+  font-size: 14px;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.category-select {
+  align-self: flex-start;
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+.transaction-amount {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.transaction-amount.debit {
+  color: var(--debit);
+}
+
+.transaction-amount.credit {
+  color: var(--credit);
+}
+
+.savings-row {
+  margin-top: 10px;
+  color: var(--credit);
+  font-size: 12px;
+  font-weight: 600;
+}
